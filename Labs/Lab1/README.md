@@ -139,7 +139,7 @@ interface GigabitEthernet1/3
  media-type rj45
  negotiation auto
 ```
-##### 2.1 Коммутатор S1
+##### 2.1 Коммутатор S2
 ```
 !
 interface GigabitEthernet0/0
