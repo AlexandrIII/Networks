@@ -19,7 +19,7 @@ Cхема лабораторного стенда, выполненная в eve
 
 ![](lab_1_eve.png)
 
-#### 1.2 Настройка основных параметров устройств
+##### 1.2 Настройка основных параметров устройств
 #####  Пример настройки на базовых параметров на маршрутизаторе R1:
 ```
 hostname R1
@@ -85,4 +85,59 @@ hostname R1
 ```
 Аналагично настраиваем коммутаторы S1 и S2
 #### 2 Создание VLAN
+##### 2.1 Коммутатор S1
+```
+!
+interface GigabitEthernet0/0
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 8
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 8
+ switchport mode trunk
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ switchport access vlan 7
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ switchport access vlan 3
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ switchport access vlan 7
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ switchport access vlan 7
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ switchport access vlan 7
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ switchport access vlan 7
+ switchport mode access
+ media-type rj45
+ negotiation auto
+```
+
 
