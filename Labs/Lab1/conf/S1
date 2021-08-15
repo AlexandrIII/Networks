@@ -1,13 +1,5 @@
 conf t
 !
-! Last configuration change at 15:17:42 MSK Sun Aug 15 2021
-!
-version 15.2
-service timestamps debug datetime msec
-service timestamps log datetime msec
-no service password-encryption
-service compress-config
-!
 hostname S1
 !
 boot-start-marker
