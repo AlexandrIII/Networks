@@ -2,8 +2,7 @@
 ###  Задание:
 
   1. Создание сети и настройка основных параметров устройств
-  2. Создание VLAN и назначение портов коммутаторов;
-  3. Настройка магистрали 802.1 Q между коммутаторами;
+  2. Создание VLAN и назначение портов коммутаторов, настройка магистрали 802.1 Q между коммутаторами;
   4. Настройка маршрутизации между VLAN на маршрутизаторе;
   5. Проверка маршрутизации между VLAN.
 ###  Решение:
@@ -155,7 +154,26 @@ VLAN Name                             Status    Ports
 1004 fddinet-default                  act/unsup
 1005 trnet-default                    act/unsup
 ```
+Проверим созданные транковые порты:
+```
+S1#show interfaces trunk
 
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       on               802.1q         trunking      8
+Gi0/1       on               802.1q         trunking      8
+
+Port        Vlans allowed on trunk
+Gi0/0       1-4094
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/0       1,3-4,7
+Gi0/1       1,3-4,7
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       1,3-4,7
+Gi0/1       1,3-4,7
+```
 ##### 2.1 Коммутатор S2
 ```
 !
@@ -225,3 +243,38 @@ VLAN Name                             Status    Ports
 1004 fddinet-default                  act/unsup
 1005 trnet-default                    act/unsup
 ```
+Проверим созданные транковые порты:
+```
+S2#show interfaces trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      8
+
+Port        Vlans allowed on trunk
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/1       1,3-4,7
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/1       1,3-4,7
+```
+#### 3 Настройка маршрутизации
+На маршрутизаторе создадим sub-интерфейсы для каждого VLAN.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
