@@ -139,6 +139,23 @@ interface GigabitEthernet1/3
  media-type rj45
  negotiation auto
 ```
+Проверим созданные VLAN 
+```
+S1#sh vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active
+3    Management                       active    Gi0/3
+4    Operations                       active
+7    ParkingLot                       active    Gi0/2, Gi1/0, Gi1/1, Gi1/2
+                                                Gi1/3
+1002 fddi-default                     act/unsup
+1003 token-ring-default               act/unsup
+1004 fddinet-default                  act/unsup
+1005 trnet-default                    act/unsup
+```
+
 ##### 2.1 Коммутатор S2
 ```
 !
@@ -192,3 +209,4 @@ interface GigabitEthernet1/3
  media-type rj45
  negotiation auto
 ```
+Проверим 
