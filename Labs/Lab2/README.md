@@ -16,9 +16,104 @@ Cхема лабораторного стенда, выполненная в eve
 
 ##### 1.2 Настройка основных параметров устройств
 #####  Пример настройки на базовых параметров на коммутаторе S1:
-
 ```
-
+hostname S1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$k/XQ$C1KMVybBEmx5284xWK4gQ1
+!
+username cisco privilege 15 secret 9 $9$Bp5GvMPutUfh2I$wsctJDWwH8/BLOC6juhB2Jc45qtYJ/gWy.JwLZ4zii.
+aaa new-model
+!
+!
+aaa authentication login default local
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone MSK 3 0
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+!
+interface Vlan1
+ ip address 192.168.1.1 255.255.255.0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^CCCAnyone accessing the device that unauthorized access is prohibited^C
+banner incoming ^CCCAnyone accessing the device that unauthorized access is prohibited^C
+banner login ^CCCAnyone accessing the device that unauthorized access is prohibited^C
+!
+line con 0
+line aux 0
+line vty 0 4
+!
+!
+end
+```
 
 
 
