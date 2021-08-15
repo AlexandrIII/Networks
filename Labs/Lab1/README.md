@@ -299,7 +299,7 @@ GigabitEthernet0/0.7       192.168.7.1     YES manual up                    up
 ![](Ping_PC_B.png)
 
 
-
+Все файлы изменений приведены [здесь](conf/).
 
 
 
