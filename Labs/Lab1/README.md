@@ -294,7 +294,7 @@ GigabitEthernet0/0.7       192.168.7.1     YES manual up                    up
 
 ![](Ping_PC_A.png)
 
-Проверка работы маршрутизации с PC_A
+Проверка работы маршрутизации с PC_B
 
 ![](Ping_PC_B.png)
 
