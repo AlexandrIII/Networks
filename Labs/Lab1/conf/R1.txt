@@ -1,4 +1,4 @@
-Current configuration : 1858 bytes
+conf t
 !
 ! Last configuration change at 15:38:00 MSK Sun Aug 15 2021 by cisco
 !
