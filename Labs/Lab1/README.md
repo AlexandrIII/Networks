@@ -3,8 +3,8 @@
 
   1. Создание сети и настройка основных параметров устройств
   2. Создание VLAN и назначение портов коммутаторов, настройка магистрали 802.1 Q между коммутаторами;
-  4. Настройка маршрутизации между VLAN на маршрутизаторе;
-  5. Проверка маршрутизации между VLAN.
+  3. Настройка маршрутизации между VLAN на маршрутизаторе;
+  4. Проверка маршрутизации между VLAN.
 ###  Решение:
 
 #### 1 Создание сети и настройка основных параметров устройств
@@ -261,14 +261,42 @@ Gi0/1       1,3-4,7
 ```
 #### 3 Настройка маршрутизации
 На маршрутизаторе создадим sub-интерфейсы для каждого VLAN.
+```
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/0.3
+ encapsulation dot1Q 3
+ ip address 192.168.3.1 255.255.255.0
+!
+interface GigabitEthernet0/0.4
+ encapsulation dot1Q 4
+ ip address 192.168.4.1 255.255.255.0
+!
+interface GigabitEthernet0/0.7
+ encapsulation dot1Q 7
+ ip address 192.168.7.1 255.255.255.0
+```
+Проверим созданныеи субинтерфейсы:
+```
+R1#sh ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         unassigned      YES NVRAM  up                    up
+GigabitEthernet0/0.3       192.168.3.1     YES NVRAM  up                    up
+GigabitEthernet0/0.4       192.168.4.1     YES NVRAM  up                    up
+GigabitEthernet0/0.7       192.168.7.1     YES manual up                    up
+```
+#### 4. Проверка маршрутизации между VLAN.
+Проверка работы маршрутизации с PC_A
 
+![](Ping_PC_A.png)
 
+Проверка работы маршрутизации с PC_A
 
-
-
-
-
-
+![](Ping_PC_B.png)
 
 
 
