@@ -150,7 +150,7 @@ end
 1. Коммутатор S1 является корневым мостом, так как имеет наименьший MAC адрес;
 2. Порты Gi0/1 коммутатора S2 и Gi0/3 коммутатора S3 являются корневыми, так как смотрят в сторону корневого моста;
 3. Порты Gi0/1, Gi0/2 коммутатора S1, Gi 0/3 коммутатора S2 и Gi0/1 коммутатора S3 являются назначенными;
-4. Порт Gi0/1 коммутатора S3 заблокирован, так как смотрит в порт с более высокой стоимостью.
+4. Порт Gi0/1 коммутатора S3 заблокирован, так как путь через коммутатор S3 обладает более высокой стоимостью.
 
 #### 3 Наблюдение за процессом выбора протоколом STP порта, исходя из стоимости портов
 ##### 3.1 Определение коммутатора с заблокированным портом
@@ -251,3 +251,75 @@ Gi0/3               Altn BLK 4         128.4    Shr
 ```
 Как мы видим протокол spanning-tree заменяет ранее заблокированный порт на назначенный порт и блокирует порт, который был назначенным портом на другом коммутаторе. Связанно это с тем что стоимость маршрута через коммутатор S3 уменьшилась.
 
+#### 4 Наблюдение за процессом выбора протоколом STP порта, исходя из приоритета портов
+#### 4.1 Активируем интерфейсы Gi0/2 и Gi0/4 на каждом коммутаторе
+#### 4.2 Проверка изменения протокола spanning-tree
+```
+S1#sh spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0001.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    Shr
+Gi0/1               Desg FWD 4         128.2    Shr
+Gi0/2               Desg FWD 4         128.3    Shr
+Gi0/3               Desg FWD 4         128.4    Shr
+```
+```
+S2#sh spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        1 (GigabitEthernet0/0)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0002.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Root FWD 4         128.1    Shr
+Gi0/1               Altn BLK 4         128.2    Shr
+Gi0/2               Desg FWD 4         128.3    Shr
+Gi0/3               Desg FWD 4         128.4    Shr
+```
+```
+S3#sh spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        3 (GigabitEthernet0/2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0003.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Altn BLK 4         128.1    Shr
+Gi0/1               Altn BLK 4         128.2    Shr
+Gi0/2               Root FWD 4         128.3    Shr
+Gi0/3               Altn BLK 4         128.4    Shr
+```
+Как мы видим протоколом STP в качестве порта корневого моста на примере коммутаторов S2 и S3, был выбран порт с меньшим порядковым номером.
