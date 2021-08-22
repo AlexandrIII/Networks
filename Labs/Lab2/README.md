@@ -150,5 +150,53 @@ end
 1. Коммутатор S1 является корневым мостом, так как имеет наименьший MAC адрес;
 2. Порты Gi0/1 коммутатора S2 и Gi0/3 коммутатора S3 являются корневыми, так как смотрят в сторону корневого моста;
 3. Порты Gi0/1, Gi0/2 коммутатора S1, Gi 0/3 коммутатора S2 и Gi0/1 коммутатора S3 являются назначенными;
-4. Порт Gi0/1 коммутатора S3 заблокирован, так как смотрит 
+4. Порт Gi0/1 коммутатора S3 заблокирован, так как смотрит в порт с более высокой стоимостью.
+
+#### 3 Наблюдение за процессом выбора протоколом STP порта, исходя из стоимости портов
+##### 3.1 Определение коммутатора с заблокированным портом
+Выполним команду show spanning-tree на обоих коммутаторах некорневого моста:
+```
+S2#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        2 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0002.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Root FWD 4         128.2    Shr
+Gi0/3               Desg FWD 4         128.4    Shr
+
+
+S3#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     5000.0001.0000
+             Cost        4
+             Port        4 (GigabitEthernet0/3)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     5000.0003.0000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/1               Altn BLK 4         128.2    Shr
+Gi0/3               Root FWD 4         128.4    Shr
+```
+##### 3.2 Изменим стоимость порта
+
 
